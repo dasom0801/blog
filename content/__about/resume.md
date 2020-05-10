@@ -13,4 +13,4 @@ github: https://github.com/dasom0801
 ----------
 
 ### 마피아 컴퍼니
-2019.07 ~ : [Kokomu](https://www.kokomu.jp/main) 프론트엔드
+2019.07 ~ : Kokomu 프론트엔드 [PC](https://kokomu.jp) / [Mobile](https://m.kokomu.jp)
