@@ -3,10 +3,10 @@ module.exports = {
   description: `Blog posted about development study`,
   author: `[김다솜]`,
   introduction: `열렙중💻🔥`,
-  siteUrl: `https://github.com/dasom0801`, // Your blog site url
+  siteUrl: `https://som-blog.netlify.app`, // Your blog site url
   social: {
     twitter: ``, // Your Twitter account
-    github: `https://github.com/dasom0801`, // Your GitHub account
+    github: `dasom0801`, // Your GitHub account
     medium: ``, // Your Medium account
     facebook: ``, // Your Facebook account
     linkedin: ``, // Your LinkedIn account
