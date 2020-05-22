@@ -1,5 +1,5 @@
 ---
-title: Basic concepts of grid layout
+title: (TIL) Basic concepts of grid layout
 date: 2020-05-18 20:05:16
 category: til
 draft: false

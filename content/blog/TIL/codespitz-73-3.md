@@ -1,5 +1,5 @@
 ---
-title: [TIL] 코드스피츠 73 - 3
+title: (TIL) 코드스피츠 73 - 3
 date: 2020-05-21 20:05:92
 category: til
 draft: false

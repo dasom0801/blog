@@ -1,5 +1,5 @@
 ---
-title: Not(~) Bitwise Operator
+title: (TIL) Not Bitwise Operator
 date: 2020-05-20 21:05:65
 category: til
 draft: false

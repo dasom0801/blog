@@ -1,5 +1,5 @@
 ---
-title: text overflow를 감지하는 directive 만들기
+title: (Angular) text overflow를 감지하는 directive 만들기
 date: 2020-05-12 21:05:61
 category: angular
 draft: false

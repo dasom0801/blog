@@ -1,5 +1,5 @@
 ---
-title: Factory Function in Javascript
+title: (TIL) Factory Function in Javascript
 date: 2020-05-11 22:05:61
 category: til
 draft: false
