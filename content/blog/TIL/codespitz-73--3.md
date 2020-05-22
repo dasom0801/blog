@@ -1,8 +1,8 @@
 ---
-title: 코드스피츠 73 - 3
+title: [TIL] 코드스피츠 73 - 3
 date: 2020-05-21 20:05:92
 category: til
-draft: true
+draft: false
 ---
 
 ### Interface
@@ -146,3 +146,137 @@ b가 참일 때는 c가 실행되지 않고, a에는 b가 들어간다. b가 fal
 **은닉**은 숨기는 것, 데이터가 안 보이는 것.
 
 **캡슐화**는 내부에서 실제로 일어나는 것을 숨기는 것. 외부에는 내가 보여주고 싶은 행위와 내가 보여주고 싶은 결과를 보여주되 내부에서 발생하고 있는 일은 보여주지 않는다. 내부에서 수정사항이 있어도 외부에서 사용하는 사람에게 영향을 주지 않는다 => 격리!
+
+### ES6 + Loop
+
+#### 사용자 반복 처리기
+
+직접 iterator 반복처리기를 구현
+
+``` javascript
+const loop = (iter, f) => {
+	// iterable이라면 iterator를 얻음
+    if(typeof iter[Symbol.iterator] == 'function') {
+        iter = iter[Symbol.iterator]();
+    }
+  	// iterator Object가 아니라면 건너뜀
+	if(typeof iter.next != 'function') return;
+	while(true) {
+        const v = iter.next() // iterator result object
+        if(v.done) return ; // 종료 처리
+        f(v.value) // 현재 값을 전달함
+    }
+};
+
+const iter = {
+    [Symbol.iterator]() {return this;},
+    arr: [1, 2, 3, 4],
+    next() {
+        return {
+            done: this.arr.length == 0,
+            value: this.arr.pop()
+        };
+    }
+};
+
+loop(iter, console.log)
+// 4
+// 3
+// 2
+// 1
+```
+
+#### Array Destructuring
+
+```javascript
+const [a, ... b] = iter;
+console.log(a, b); // 4, [3, 2, 1]
+const [a, ...b] = iter[Symbol.iterator]();
+console.log(a, b); // 4, [3, 2, 1]
+const [a, ...b] = [1, 2, 3, 4];
+console.log(a, b); // 1, [2, 3, 4]
+const [a, ...b] = "ABCD";
+console.log(a, b); // A, [B, C, D]
+```
+
+배열과 string도 iterator가 있기 때문에  destructuring이 가능하다. 
+
+#### Spread operator(펼치기)
+
+```javascript
+const a = [...iter];
+console.log(a) //[4, 3, 2, 1]
+```
+
+#### Rest Parameter(나머지 인자)
+
+```javascript
+const test = (...arg) => console.log(arg); // 여기서 ...arg는 rest parameter [4, 3, 2, 1]
+test(...iter); // 여기서 ...iter는 spread operator, 4 3 2 1 
+```
+
+spread와 rest를 구분할 때 사용하는 장소를 보기. rest는 함수 선언시 사용된다. 여러개의 배열이 아닌 요소들을 모아서 배열로 만들어준다. spead는 묶었던 걸 펼쳐준다. 
+
+#### For of
+
+```javascript
+for(const v of iter) {
+    console.log(v)
+}
+```
+
+얼마만큼 loop를 돌릴지를 통제하는 것은 for가 아닌 이터러블, 이터레이터
+
+#### 제곱을 요소로 갖는 가상 컬렉션
+
+```javascript
+const N2 = class {
+    constructor(max) {
+        this.max = max;
+    }
+    
+    [Symbol.iterator]() {
+        let cursor = 0, max = this.max;
+        return {
+            done: false,
+            next() {
+                if(cursor > max) {
+                    this.done = true;
+                } else {
+                    this.value = cursor * cursor;
+                    cursor++;
+                }
+                return this;
+            }
+        };
+    }
+};
+
+console.log([...new N2(5)]); // [0, 1, 4, 9, 16, 25]
+
+for(const v of new N2(5)) {
+    console.log(v); // 0 1 4 9 16 25
+}
+```
+
+#### Generator
+
+iterator를 만들어 내는 것은 iterable. iterable은 Symbol.iterator를 호출하면 그 반환값으로 iterator를 만든다. 
+
+generator를 호출한 결과도 iterator!
+
+```javascript
+const generator = function*(max) {
+	let cursor = 0;
+	while(cursor < max) { // iterator의 next 역할
+		yield cursor * cursor;
+		cursor++;
+	}
+};
+
+console.log([...generator('5')]);
+for(const v of generator(5)) {
+	console.log(v);
+}
+```
+
